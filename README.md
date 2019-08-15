@@ -1,2 +1,2 @@
 # coq
-Functional programming in Coq
+Functional programming in Coq using Galina
