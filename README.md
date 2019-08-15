@@ -1,2 +1,2 @@
 # coq
-Functional programming in Coq using Galina
+Functional programming in Coq using Galina for the TAES course.

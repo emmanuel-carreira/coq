@@ -1,1 +1,3 @@
-coqc aula03_galina.v
+coqc aula03_galina.v (* compilar arquivo para poder importá-lo *)
+
+(* rewrite sem seta, por default é da esquerda pra direita *)
