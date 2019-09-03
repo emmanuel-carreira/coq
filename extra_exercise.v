@@ -54,6 +54,6 @@ Fixpoint find {X : Type} (x : X) (b : btree X)
   | node v l r => if lt x v 
                   then find x l lt
                   else if lt v x
-                       then find x r
+                       then find x r lt
                        else true
 end.
