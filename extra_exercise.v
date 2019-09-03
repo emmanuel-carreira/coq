@@ -34,7 +34,7 @@ Example count_test2 :
   count (node 2 bnil bnil) = 1.
 Proof. reflexivity. Qed.
 
-(* Usando função less than (estritamente menor) que não foi implementada; insert é uma função de alta ordem*)
+(* Usando função less than (estritamente menor) que não foi implementada; insert e find são funções de alta ordem*)
 
 Fixpoint insert {X : Type} (x : X) (b : btree X)
                 (lt : X -> X -> bool) : btree X:=
@@ -45,4 +45,15 @@ Fixpoint insert {X : Type} (x : X) (b : btree X)
                   else if lt v x
                        then node v l (insert x r lt)
                        else b
+end.
+
+Fixpoint find {X : Type} (x : X) (b : btree X)
+                (lt : X -> X -> bool) : bool:=
+  match b with
+  | bnil => false
+  | node v l r => if lt x v 
+                  then find x l lt
+                  else if lt v x
+                       then find x r
+                       else true
 end.
