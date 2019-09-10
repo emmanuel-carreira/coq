@@ -32,3 +32,13 @@ Example trans_eq_exercise : forall (n m o p : nat),
 Proof.
   intros. apply trans_eq with (m:=m). apply H0. apply H.
 Qed.
+
+(** **** Exercise: (inversion_ex3)  *)
+Example inversion_ex3 : forall (X : Type)
+  (x y z : X) (l j : list X),
+    x :: y :: l = z :: j ->
+    y :: l = x :: j ->
+    x = y.
+Proof.
+  intros. inversion H0. reflexivity.
+Qed.
