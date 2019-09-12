@@ -42,3 +42,18 @@ Example inversion_ex3 : forall (X : Type)
 Proof.
   intros. inversion H0. reflexivity.
 Qed.
+
+(** **** Exercise: (beq_nat_true)  *)
+Theorem beq_nat_true : forall n m,
+    beq_nat n m = true -> n = m.
+Proof.
+  intros n. induction n.
+  - intros. apply beq_nat_0_l in H. symmetry. apply H.
+  - destruct m.
+    + intros. inversion H.
+    + intros. inversion H. Search (S _).
+      assert (A: n = m -> S n = S m). {
+    intros. rewrite H0. reflexivity.
+}
+    apply A. apply IHn in H1. apply H1.
+Qed.
