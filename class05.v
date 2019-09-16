@@ -42,7 +42,7 @@ Theorem plus_swap : forall n m p : nat,
   n + (m + p) = m + (n + p).
 Proof.
   intros.
-  Print plus_assoc. rewrite plus_assoc. rewrite plus_assoc.
+  rewrite plus_assoc. rewrite plus_assoc.
   assert(H: n + m = m + n).
   { rewrite plus_comm. reflexivity. }
   rewrite H. reflexivity.
@@ -51,12 +51,7 @@ Qed.
 Theorem mult_comm : forall m n : nat,
   m * n = n * m.
 Proof.
-  (* COMPLETE AQUI *) 
-  intros. induction m.
-  - induction n.
-    + reflexivity.
-    + Search (0*_). rewrite mult_0_l. Search "mult". rewrite mult_0_r. reflexivity.
-  - induction n.
-    + Search "mult". rewrite mult_0_r. rewrite mult_0_l. reflexivity.
-    + simpl. rewrite <- IHn.
-Admitted.
+  intros n m. induction n.
+  - simpl. rewrite <- mult_n_O. reflexivity.
+  - Search mult. rewrite <- mult_n_Sm. simpl. rewrite plus_comm. rewrite IHn. reflexivity.
+Qed.
