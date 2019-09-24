@@ -68,3 +68,54 @@ Proof.
       * apply H.
       * apply H0.
 Qed.
+
+(** **** Exercise: (In_map_iff)  *)
+Lemma In_map_iff :
+  forall (A B : Type) (f : A -> B) (l : list A) (y : B),
+    In y (map f l) <->
+    exists x, f x = y /\ In x l.
+Proof.
+  split.
+  - induction l as [|x l' IHl'].
+    + simpl. intro H. inversion H.
+    + simpl. intro H. destruct H as [H | H].
+      * exists x. split.
+        { apply H. }
+        { left. reflexivity. }
+      * apply IHl' in H. destruct H.
+        { destruct H as [H1 H2]. exists x0. split.
+          { apply H1. }
+          { right. apply H2. }
+        }
+  - induction l as [|x l' IHl'].
+    + intros. destruct H. destruct H. simpl in H0. inversion H0.
+    + simpl. intros H. destruct H. destruct H as [H1 H2]. destruct H2.
+      * left. rewrite H. apply H1.
+      * right. apply IHl'. exists x0. split.
+        { apply H1. }
+        { apply H. }
+Qed.
+
+(** **** Exercise: (In_app_iff)  *)
+Lemma In_app_iff : forall A l l' (a:A),
+  In a (l++l') <-> In a l \/ In a l'.
+Proof.
+  split.
+  - induction l.
+    + intros. simpl in H. right. apply H.
+    + intros. destruct H.
+      * left. rewrite H. simpl. left. reflexivity.
+      * apply IHl in H as H1. destruct H1 as [H1 | H1].
+        { simpl. left. right. apply H1. }
+        { right. apply H1. }
+  - intros. destruct H as [H | H].
+    + induction l.
+      * inversion H.
+      * simpl in H. destruct H.
+        { simpl. left. apply H. }
+        { simpl. right. apply IHl. apply H. }
+    + induction l'.
+      * inversion H.
+      * destruct H.
+        { rewrite H.
+Abort.
