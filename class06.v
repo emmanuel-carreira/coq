@@ -152,5 +152,62 @@ Proof.
   - induction l2.
     + simpl. reflexivity.
     + simpl. rewrite app_nil_r. reflexivity. 
-  - simpl. rewrite IHl1. 
-(* COMPLETE AQUI *) Admitted.
+  - simpl. rewrite IHl1. rewrite app_assoc. reflexivity.
+Qed.
+
+Theorem rev_involutive : forall l : natlist,
+  rev (rev l) = l.
+Proof.
+  intros. induction l.
+  - reflexivity.
+  - simpl. rewrite rev_app_distr. rewrite IHl. reflexivity.
+Qed.
+
+Lemma nonzeros_app : forall l1 l2 : natlist,
+  nonzeros (l1 ++ l2) = (nonzeros l1) ++ (nonzeros l2).
+Proof.
+  intros. induction l1.
+  - reflexivity.
+  - 
+Abort.
+
+(** **** Exercise: (beq_natlist)  *)
+(** Complete a definição de [beq_natlist], que
+    compara listas de números. Veja os exemplos.
+    Em seguida, prove o teorema [beq_natlist_refl]. *)
+
+Fixpoint beq_natlist (l1 l2 : natlist) : bool :=
+match l1, l2 with
+  | [], [] => true
+  | [], _ => false
+  | _ , [] => false
+  | h1 :: t1, h2 :: t2 => if beq_nat h1 h2
+                         then beq_natlist t1 t2
+                         else false
+end.
+
+Example test_beq_natlist1 :
+  (beq_natlist nil nil = true).
+Proof.
+  reflexivity.
+Qed.
+
+Example test_beq_natlist2 :
+  beq_natlist [1;2;3] [1;2;3] = true.
+Proof.
+  reflexivity.
+Qed.
+
+Example test_beq_natlist3 :
+  beq_natlist [1;2;3] [1;2;4] = false.
+Proof.
+  reflexivity.
+Qed.
+
+Theorem beq_natlist_refl : forall l:natlist,
+  true = beq_natlist l l.
+Proof.
+  intros l. induction l as [| n l].
+  - reflexivity.
+  - rewrite IHl. simpl.
+Abort.
